@@ -4,8 +4,8 @@
 #include <string>
 class BankAccount {
 public:
-  virtual void withdraw() = 0;
-  virtual double deposit(double amount);
+  virtual double withdraw() = 0;
+  virtual void deposit(double);
   virtual void display();
 
   class InsufficientFundsException : public std::exception {
