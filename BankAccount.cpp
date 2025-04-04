@@ -2,15 +2,15 @@
 
 void BankAccount::deposit(double amount) {
   if (amount < 0) {
-    throw NegativeFundsException();
+    throw NegativeAmountException("Error, can't deposit a negative amount");
   }
   balance += amount;
 }
 
-const char *BankAccount::InsufficientFundsException::what() {
-  return "Error: insufficient funds";
+const char *BankAccount ::InsufficientFundsException::what() {
+  return errMsg.c_str();
 }
 
-const char *BankAccount::NegativeFundsException::what() {
-  return "Error: cannot deposit negative funds";
+const char *BankAccount::NegativeAmountException::what() {
+  return errMsg.c_str();
 }

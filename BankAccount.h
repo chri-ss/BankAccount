@@ -10,13 +10,16 @@ public:
 
   class InsufficientFundsException : public std::exception {
   public:
+    InsufficientFundsException(std::string error) { errMsg = error; }
     const char *what();
 
   private:
     std::string errMsg;
   };
-  class NegativeFundsException : public std::exception {
+
+  class NegativeAmountException : public std::exception {
   public:
+    NegativeAmountException(std::string error) { errMsg = error; }
     const char *what();
 
   private:
