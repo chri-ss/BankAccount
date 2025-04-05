@@ -1,28 +1,14 @@
 #ifndef SAVINGSACCOUNT_H
 #define SAVINGSACCOUNT_H
 #include "BankAccount.h"
+#include <string>
 class SavingsAccount : public BankAccount {
 public:
-  SavingsAccount(double intRate, double wdFee, int freeWdLimit, int availFreeWd)
-      : BankAccount() {
-    if (intRate <= 0) {
-      throw NegativeAmountException("Error, negative interest rate");
-    }
-    if (wdFee <= 0) {
-      throw NegativeAmountException("Error, negative withdrawal fee");
-    }
-    if (freeWdLimit <= 0) {
-      throw NegativeAmountException("Error, negative withdrawal limit");
-    }
-    if (availFreeWd <= 0) {
-      throw NegativeAmountException("Error, negative available withdrawal");
-    }
+  // parameterized constructor
+  SavingsAccount(std::string, int, double, double, double, int, int);
 
-    interestRate = intRate;
-    withdrawFee = wdFee;
-    freeWithdrawlimit = freeWdLimit;
-    availableFreeWithdrawal = availFreeWd;
-  }
+  void applyInterest();
+  void resetMonthlyWithdrawLimit();
 
 private:
   double interestRate;
