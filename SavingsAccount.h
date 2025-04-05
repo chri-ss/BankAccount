@@ -13,9 +13,9 @@ public:
   // should be caled on first of every month
   void resetMonthlyWithdrawLimit();
 
+  double withdraw(double) override;
   void display() noexcept override;
   void deposit(double) override;
-  double withdraw(double) override;
 
 private:
   double interestRate;

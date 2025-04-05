@@ -26,6 +26,20 @@ SavingsAccount::SavingsAccount(std::string acctHldr, int acctNum, double bal,
   availableFreeWithdrawal = availFreeWd;
 }
 
+double SavingsAccount::withdraw(double amount) {
+  if (balance < 0) {
+    throw NegativeAmountException("Error, insufficient funds");
+  }
+
+  if (freeWithdrawlimit >= availableFreeWithdrawal) {
+    std::cout << "You have exceeded your available free " << freeWithdrawlimit
+              << " withdrawals for the month. A fee of " << withdrawFee
+              << " will be applied to your account." << std::endl;
+  }
+  balance -= amount;
+  return amount;
+}
+
 void SavingsAccount::applyInterest() { balance += balance * interestRate; }
 
 void SavingsAccount::resetMonthlyWithdrawLimit() {
@@ -45,5 +59,3 @@ void SavingsAccount::deposit(double amount) {
   }
   balance += amount;
 }
-
-double SavingsAccount::withdraw(double amount) { return amount; }
