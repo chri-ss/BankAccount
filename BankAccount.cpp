@@ -6,12 +6,8 @@ BankAccount::BankAccount()
 BankAccount::BankAccount(std::string acctHldr, int acctNum, double bal)
     : accountHolder(acctHldr), accountNumber(acctNum), balance(bal) {}
 
-void BankAccount::deposit(double amount) {
-  if (amount < 0) {
-    throw NegativeAmountException("Error, can't deposit a negative amount");
-  }
-  balance += amount;
-}
+BankAccount::~BankAccount() {}
+
 BankAccount::InsufficientFundsException::InsufficientFundsException(
     std::string error) {
   errMsg = error;
@@ -28,3 +24,6 @@ const char *BankAccount ::InsufficientFundsException::what() {
 const char *BankAccount::NegativeAmountException::what() {
   return errMsg.c_str();
 }
+
+void BankAccount::deposit(double) {}
+void BankAccount::display() noexcept {}

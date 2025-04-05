@@ -6,10 +6,11 @@ class BankAccount {
 public:
   BankAccount();
   BankAccount(std::string, int, double);
+  ~BankAccount();
 
-  virtual double withdraw() = 0;
+  virtual double withdraw(double) = 0;
   virtual void deposit(double);
-  virtual void display();
+  virtual void display() noexcept;
 
   class InsufficientFundsException : public std::exception {
   public:
@@ -30,6 +31,9 @@ public:
   };
 
 protected:
+  std::string getAccountHolder() const { return accountHolder; }
+  int getAccountNumber() const { return accountNumber; }
+  int getBalance() const { return balance; }
   double balance;
 
 private:

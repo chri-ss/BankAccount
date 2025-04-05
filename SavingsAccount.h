@@ -7,8 +7,15 @@ public:
   // parameterized constructor
   SavingsAccount(std::string, int, double, double, double, int, int);
 
+  // applies simple interest to the account
   void applyInterest();
+
+  // should be caled on first of every month
   void resetMonthlyWithdrawLimit();
+
+  void display() noexcept override;
+  void deposit(double) override;
+  double withdraw(double) override;
 
 private:
   double interestRate;
