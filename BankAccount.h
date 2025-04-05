@@ -4,13 +4,17 @@
 #include <string>
 class BankAccount {
 public:
-  virtual double withdraw() = 0;
+  BankAccount();
+  BankAccount(std::string, int, double);
+  virtual ~BankAccount();
+
+  virtual double withdraw(double) = 0;
   virtual void deposit(double);
-  virtual void display();
+  virtual void display() noexcept;
 
   class InsufficientFundsException : public std::exception {
   public:
-    InsufficientFundsException(std::string error) { errMsg = error; }
+    InsufficientFundsException(std::string);
     const char *what();
 
   private:
@@ -19,16 +23,21 @@ public:
 
   class NegativeAmountException : public std::exception {
   public:
-    NegativeAmountException(std::string error) { errMsg = error; }
+    NegativeAmountException(std::string);
     const char *what();
 
   private:
     std::string errMsg;
   };
 
+protected:
+  std::string getAccountHolder() const { return accountHolder; }
+  int getAccountNumber() const { return accountNumber; }
+  int getBalance() const { return balance; }
+  double balance;
+
 private:
   std::string accountHolder;
   int accountNumber;
-  double balance;
 };
 #endif
