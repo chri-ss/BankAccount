@@ -6,7 +6,7 @@ class BankAccount {
 public:
   BankAccount();
   BankAccount(std::string, int, double);
-  ~BankAccount();
+  virtual ~BankAccount();
 
   virtual double withdraw(double) = 0;
   virtual void deposit(double);

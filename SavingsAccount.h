@@ -7,15 +7,21 @@ public:
   // parameterized constructor
   SavingsAccount(std::string, int, double, double, double, int, int);
 
+  // prevent copying or moving of accounts
+  SavingsAccount(const SavingsAccount &) = delete;
+  SavingsAccount(SavingsAccount &&) = delete;
+  SavingsAccount &operator=(const SavingsAccount &) = delete;
+  SavingsAccount &operator=(const SavingsAccount &&) = delete;
+
+  double withdraw(double) override;
+  void display() noexcept override;
+  void deposit(double) override;
+
   // applies simple interest to the account
   void applyInterest();
 
   // should be caled on first of every month
   void resetMonthlyWithdrawLimit();
-
-  double withdraw(double) override;
-  void display() noexcept override;
-  void deposit(double) override;
 
 private:
   double interestRate;

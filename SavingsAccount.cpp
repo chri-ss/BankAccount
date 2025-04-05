@@ -28,7 +28,7 @@ SavingsAccount::SavingsAccount(std::string acctHldr, int acctNum, double bal,
 
 double SavingsAccount::withdraw(double amount) {
   if (balance < 0) {
-    throw NegativeAmountException("Error, insufficient funds");
+    throw InsufficientFundsException("Error, insufficient funds for withdrawal");
   }
 
   if (freeWithdrawlimit >= availableFreeWithdrawal) {
@@ -40,10 +40,11 @@ double SavingsAccount::withdraw(double amount) {
   return amount;
 }
 
-void SavingsAccount::applyInterest() { balance += balance * interestRate; }
-
-void SavingsAccount::resetMonthlyWithdrawLimit() {
-  availableFreeWithdrawal = freeWithdrawlimit;
+void SavingsAccount::deposit(double amount) {
+  if (amount < 0) {
+    throw NegativeAmountException("Error, can't deposit a negative amount");
+  }
+  balance += amount;
 }
 
 void SavingsAccount::display() noexcept {
@@ -53,9 +54,8 @@ void SavingsAccount::display() noexcept {
             << std::endl;
 }
 
-void SavingsAccount::deposit(double amount) {
-  if (amount < 0) {
-    throw NegativeAmountException("Error, can't deposit a negative amount");
-  }
-  balance += amount;
+void SavingsAccount::applyInterest() { balance += balance * interestRate; }
+
+void SavingsAccount::resetMonthlyWithdrawLimit() {
+  availableFreeWithdrawal = freeWithdrawlimit;
 }
