@@ -23,7 +23,7 @@ double CheckingAccount::withdraw(double amount) {
   if (balance < overdraftLimit) {
     balance += monthlyFee;
     throw InsufficientFundsException(
-        "Error, insufficient funds for monthly fee");
+        "Error, insufficient funds for withdrawal");
   }
   return amount;
 }

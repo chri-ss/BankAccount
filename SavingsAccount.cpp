@@ -30,7 +30,9 @@ SavingsAccount::SavingsAccount(std::string acctHldr, int acctNum, double bal,
 }
 
 double SavingsAccount::withdraw(double amount) {
+  balance -= amount;
   if (balance < 0) {
+    balance += amount;
     throw InsufficientFundsException(
         "Error, insufficient funds for withdrawal");
   }
@@ -39,8 +41,8 @@ double SavingsAccount::withdraw(double amount) {
     std::cout << "You have exceeded your available free " << freeWithdrawlimit
               << " withdrawals for the month. A fee of " << withdrawFee
               << " will be applied to your account." << std::endl;
+    balance -= withdrawFee;
   }
-  balance -= amount;
   return amount;
 }
 
