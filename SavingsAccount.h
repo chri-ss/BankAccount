@@ -1,7 +1,6 @@
 #ifndef SAVINGSACCOUNT_H
 #define SAVINGSACCOUNT_H
 #include "BankAccount.h"
-#include <string>
 class SavingsAccount : public BankAccount {
 public:
   // parameterized constructor
