@@ -4,7 +4,14 @@
 
 class BusinessAccount : public BankAccount {
 public:
+  // parameterized constructor
   BusinessAccount(std::string, int, double, int, double);
+
+  // prevent copying or moving of accounts
+  BusinessAccount(const BusinessAccount &) = delete;
+  BusinessAccount(BusinessAccount &&) = delete;
+  BusinessAccount &operator=(const BusinessAccount &) = delete;
+  BusinessAccount &operator=(const BusinessAccount &&) = delete;
 
   double withdraw(double) override;
   void display() noexcept override;
