@@ -13,6 +13,8 @@ public:
 
   void chargeMonthlyFee();
 
+  double getOverdraftLimit() const;
+
 private:
   double overdraftLimit;
   double monthlyFee;
