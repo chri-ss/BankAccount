@@ -13,9 +13,10 @@ public:
   void resetTransactionCount();
 
 private:
+  int transactions;
   int transactionLimit;
   // chargded on additional withdrawals/deposits in excess of transactionLimit
-  double transactonFee;
+  double transactionFee;
 };
 
 #endif
