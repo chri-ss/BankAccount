@@ -18,3 +18,15 @@ CheckingAccount::CheckingAccount(std::string acctHldr, int acctNum, double bal,
   overdraftLimit = odLim;
   monthlyFee = mFee;
 }
+double withdraw(double) {}
+void display() noexcept {}
+void deposit(double) {};
+
+void CheckingAccount::chargeMonthlyFee() {
+  balance -= monthlyFee;
+  if (balance < overdraftLimit) {
+    balance += monthlyFee;
+    throw InsufficientFundsException(
+        "Error, insufficient funds for monthly fee");
+  }
+}
