@@ -7,6 +7,9 @@ SavingsAccount::SavingsAccount(std::string acctHldr, int acctNum, double bal,
                                double intRate, double wdFee, int freeWdLimit,
                                int availFreeWd)
     : BankAccount(acctHldr, acctNum, bal) {
+  if (bal <= 0) {
+    throw NegativeAmountException("Error, balance must be positive");
+  }
   if (intRate <= 0) {
     throw NegativeAmountException("Error, negative interest rate");
   }
@@ -28,7 +31,8 @@ SavingsAccount::SavingsAccount(std::string acctHldr, int acctNum, double bal,
 
 double SavingsAccount::withdraw(double amount) {
   if (balance < 0) {
-    throw InsufficientFundsException("Error, insufficient funds for withdrawal");
+    throw InsufficientFundsException(
+        "Error, insufficient funds for withdrawal");
   }
 
   if (freeWithdrawlimit >= availableFreeWithdrawal) {
