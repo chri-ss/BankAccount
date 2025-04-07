@@ -5,7 +5,7 @@
 class BusinessAccount : public BankAccount {
 public:
   // parameterized constructor
-  BusinessAccount(std::string, int, double, int, double);
+  BusinessAccount(std::string, double, int, double);
 
   // prevent copying or moving of accounts
   BusinessAccount(const BusinessAccount &) = delete;
@@ -26,9 +26,9 @@ private:
   double transactionFee;
 };
 
-BusinessAccount::BusinessAccount(std::string acctHldr, int acctNum, double bal,
+BusinessAccount::BusinessAccount(std::string acctHldr, double bal,
                                  int transLimit, double transFee)
-    : BankAccount(acctHldr, acctNum, bal) {
+    : BankAccount(acctHldr, bal) {
   if (transLimit < 0) {
     throw NegativeAmountException(
         "Error, transactions must be limited to a positive number, or zero");

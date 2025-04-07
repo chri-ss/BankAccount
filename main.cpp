@@ -2,10 +2,15 @@
 #include "CheckingAccount.h"
 #include "SavingsAccount.h"
 #include <cctype>
+#include <cstdlib>
 #include <string>
 
 BankAccount *createAccount();
 bool validateName(const std::string &);
+void getBankAccountInfo(std::string &, double &);
+void getSavingsAccountInfo(double &, double &, int &, int &);
+void getCheckingAccountInfo(double &, double &);
+void getBusinessAccountInfo(int &, double &);
 
 BankAccount *createAccount() {
   // ask what type of account to make
@@ -28,49 +33,80 @@ BankAccount *createAccount() {
   std::cin.ignore(1000, '\n');
 
   BankAccount *account;
+
   // create the account
+  std::string accountHldr;
+  double bal;
+  getBankAccountInfo(accountHldr, bal);
+
   switch (accountChoice) {
   case 1:
     // get info for savings account
-    std::string accountHldr;
-    do {
-      std::cout << "Enter a name for the account" << std::endl;
-      getline(std::cin, accountHldr);
-      if (!validateName(accountHldr)) {
-        std::cout << "Account holder name must be alphabetical characters "
-                     "only. Please try again."
-                  << std::endl;
-      }
-    } while (!validateName(accountHldr));
-     // account numbers handled by BankAccount base class
+    double interestRate;
+    double withdrawFee;
+    int freeWithdrawlimit;
+    int availablefreeWithdraw;
+    getSavingsAccountInfo(interestRate, withdrawFee, freeWithdrawlimit,
+                          availablefreeWithdraw);
     break;
-    // case 2:
-    // get info for checking account
-
+  case 2:
+    //  get info for checking account
+    double overdraftLimit;
+    double monthlyFee;
+    getCheckingAccountInfo(overdraftLimit, monthlyFee);
     break;
-    // case 3:
-    //   // get info for business account
-    //   break;
-    // default:
-    //   break;
-    // }
+  case 3:
+    // get info for business account
+    int transactionLimit;
+    double transactionFee;
+    getBusinessAccountInfo(transactionLimit, transactionFee);
+    break;
+  default:
+    break;
   }
+
   return account;
 }
 
 bool validateName(const std::string &str) {
   for (int i = 0; i < str.size(); ++i) {
-    if (!isalpha(str[i])) {
+    if (!isalpha(str[i]) && !isspace(str[i])) {
       return false;
     }
   }
   return true;
 }
 
+void getBankAccountInfo(std::string &acctHldr, double &bal) {
+  do {
+    std::cout << "Enter a name for the account" << std::endl;
+    getline(std::cin, acctHldr);
+    if (!validateName(acctHldr)) {
+      std::cout << "Account holder name must be alphabetical characters "
+                   "only. Please try again."
+                << std::endl;
+    }
+  } while (!validateName(acctHldr));
+  // account numbers handled by BankAccount base class
+
+  do {
+    std::cout << "Enter the starting balance for the account" << std::endl;
+    std::cin >> bal;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+    }
+    if (bal <= 0) {
+      std::cout << "balance must be a positive value. Please try again."
+                << std::endl;
+    }
+  } while (bal <= 0);
+}
+
 int main() {
-  SavingsAccount savings1("chris", 100, 0.50, 0.05, 0.50, 10, 10);
-  CheckingAccount checking1("Chris", 200, 80.0, 1000.0, 15.00);
-  BusinessAccount business1("Chris", 300, 999.0, 6, 20.0);
+  SavingsAccount savings1("chris", 100, 0.05, 0.50, 10, 10);
+  CheckingAccount checking1("Chris", 200, 1000.0, 15.00);
+  BusinessAccount business1("Chris", 300, 6, 20.0);
 
   BankAccount *bPtr = &savings1;
   BankAccount *bPtr2 = &checking1;

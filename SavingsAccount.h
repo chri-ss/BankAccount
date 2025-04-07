@@ -4,7 +4,7 @@
 class SavingsAccount : public BankAccount {
 public:
   // parameterized constructor
-  SavingsAccount(std::string, int, double, double, double, int, int);
+  SavingsAccount(std::string, double, double, double, int, int);
 
   // prevent copying or moving of accounts
   SavingsAccount(const SavingsAccount &) = delete;
@@ -29,10 +29,9 @@ private:
   int availableFreeWithdrawal;
 };
 
-SavingsAccount::SavingsAccount(std::string acctHldr, int acctNum, double bal,
-                               double intRate, double wdFee, int freeWdLimit,
-                               int availFreeWd)
-    : BankAccount(acctHldr, acctNum, bal) {
+SavingsAccount::SavingsAccount(std::string acctHldr, double bal, double intRate,
+                               double wdFee, int freeWdLimit, int availFreeWd)
+    : BankAccount(acctHldr, bal) {
   if (bal <= 0) {
     throw NegativeAmountException("Error, balance must be positive");
   }

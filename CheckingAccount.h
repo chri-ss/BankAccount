@@ -5,7 +5,7 @@
 class CheckingAccount : public BankAccount {
 public:
   // parameterized constructor
-  CheckingAccount(std::string, int, double, double, double);
+  CheckingAccount(std::string, double, double, double);
 
   double withdraw(double) override;
   void display() noexcept override;
@@ -20,9 +20,9 @@ private:
   double monthlyFee;
 };
 
-CheckingAccount::CheckingAccount(std::string acctHldr, int acctNum, double bal,
+CheckingAccount::CheckingAccount(std::string acctHldr, double bal,
                                  double odLim, double mFee)
-    : BankAccount(acctHldr, acctNum, bal) {
+    : BankAccount(acctHldr, bal) {
   if (bal <= 0) {
     throw NegativeAmountException("Error, balance must be positive");
   }

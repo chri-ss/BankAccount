@@ -7,7 +7,7 @@
 class BankAccount {
 public:
   BankAccount();
-  BankAccount(std::string, int, double);
+  BankAccount(std::string, double);
   virtual ~BankAccount();
 
   virtual double withdraw(double) = 0;
@@ -41,13 +41,14 @@ protected:
 private:
   std::string accountHolder;
   int accountNumber;
+  static int accountCounter;
 };
 
 BankAccount::BankAccount()
     : accountHolder(""), accountNumber(0), balance(0.0) {}
 
-BankAccount::BankAccount(std::string acctHldr, int acctNum, double bal)
-    : accountHolder(acctHldr), accountNumber(acctNum), balance(bal) {}
+BankAccount::BankAccount(std::string acctHldr, double bal)
+    : accountHolder(acctHldr), accountNumber(++accountCounter), balance(bal) {}
 
 BankAccount::~BankAccount() {}
 
@@ -70,5 +71,7 @@ const char *BankAccount::NegativeAmountException::what() {
 
 void BankAccount::deposit(double) {}
 void BankAccount::display() noexcept {}
+
+int BankAccount::accountCounter = 0;
 
 #endif
