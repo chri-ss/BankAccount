@@ -1,9 +1,13 @@
 #include "BusinessAccount.h"
 #include "CheckingAccount.h"
 #include "SavingsAccount.h"
+#include <cctype>
 #include <string>
 
-BankAccount &createAccount() {
+BankAccount *createAccount();
+bool validateName(const std::string &);
+
+BankAccount *createAccount() {
   // ask what type of account to make
   int accountChoice = 0;
   do {
@@ -19,22 +23,48 @@ BankAccount &createAccount() {
     }
   } while (accountChoice < 1 || accountChoice > 3);
 
+  // clear newline from first cin
+  std::cin.clear();
+  std::cin.ignore(1000, '\n');
+
   BankAccount *account;
   // create the account
   switch (accountChoice) {
   case 1:
     // get info for savings account
+    std::string accountHldr;
+    do {
+      std::cout << "Enter a name for the account" << std::endl;
+      getline(std::cin, accountHldr);
+      if (!validateName(accountHldr)) {
+        std::cout << "Account holder name must be alphabetical characters "
+                     "only. Please try again."
+                  << std::endl;
+      }
+    } while (!validateName(accountHldr));
+     // account numbers handled by BankAccount base class
     break;
-  case 2:
+    // case 2:
     // get info for checking account
+
     break;
-  case 3:
-    // get info for business account
-    break;
-  default:
-    break;
+    // case 3:
+    //   // get info for business account
+    //   break;
+    // default:
+    //   break;
+    // }
   }
-  return *account;
+  return account;
+}
+
+bool validateName(const std::string &str) {
+  for (int i = 0; i < str.size(); ++i) {
+    if (!isalpha(str[i])) {
+      return false;
+    }
+  }
+  return true;
 }
 
 int main() {
