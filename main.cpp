@@ -5,12 +5,31 @@
 #include <cstdlib>
 #include <string>
 
+// To create specific kinds of bank account objects
 BankAccount *createAccount();
+
+// utilities for validating input
 bool validateName(const std::string &);
 void getBankAccountInfo(std::string &, double &);
 void getSavingsAccountInfo(double &, double &, int &, int &);
 void getCheckingAccountInfo(double &, double &);
 void getBusinessAccountInfo(int &, double &);
+
+int main() {
+  SavingsAccount savings1("chris", 100, 0.05, 0.50, 10, 10);
+  CheckingAccount checking1("Chris", 200, 1000.0, 15.00);
+  BusinessAccount business1("Chris", 300, 6, 20.0);
+
+  BankAccount *bPtr = &savings1;
+  BankAccount *bPtr2 = &checking1;
+  BankAccount *bPtr3 = &business1;
+
+  bPtr->display();
+  bPtr2->display();
+  bPtr3->display();
+  createAccount();
+  return 0;
+}
 
 BankAccount *createAccount() {
   // ask what type of account to make
@@ -53,7 +72,7 @@ BankAccount *createAccount() {
     //  get info for checking account
     double overdraftLimit;
     double monthlyFee;
-    //    getCheckingAccountInfo(overdraftLimit, monthlyFee);
+    getCheckingAccountInfo(overdraftLimit, monthlyFee);
     break;
   case 3:
     // get info for business account
@@ -164,18 +183,34 @@ void getSavingsAccountInfo(double &intRate, double &wdFee, int &freeWdLim,
   } while (availFreeWd < 0);
 }
 
-int main() {
-  SavingsAccount savings1("chris", 100, 0.05, 0.50, 10, 10);
-  CheckingAccount checking1("Chris", 200, 1000.0, 15.00);
-  BusinessAccount business1("Chris", 300, 6, 20.0);
-
-  BankAccount *bPtr = &savings1;
-  BankAccount *bPtr2 = &checking1;
-  BankAccount *bPtr3 = &business1;
-
-  bPtr->display();
-  bPtr2->display();
-  bPtr3->display();
-  createAccount();
-  return 0;
+void getCheckingAccountInfo(double &odLim, double &mFee) {
+  do {
+    std::cout << "Enter the available overdraft limit for the account"
+              << std::endl;
+    std::cin >> odLim;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+      odLim = -1;
+    }
+    if (odLim < 0) {
+      std::cout << "overdraft limit must be a positive value. "
+                   "Please try again."
+                << std::endl;
+    }
+  } while (odLim < 0);
+  do {
+    std::cout << "monthly fee for the account" << std::endl;
+    std::cin >> mFee;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+      mFee = -1;
+    }
+    if (mFee < 0) {
+      std::cout << "monthly fee must be a positive value. "
+                   "Please try again."
+                << std::endl;
+    }
+  } while (mFee < 0);
 }
