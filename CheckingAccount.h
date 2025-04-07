@@ -6,6 +6,12 @@ class CheckingAccount : public BankAccount {
 public:
   // parameterized constructor
   CheckingAccount(std::string, double, double, double);
+  //
+  // prevent copying or moving of accounts
+  CheckingAccount(const CheckingAccount &) = delete;
+  CheckingAccount(CheckingAccount &&) = delete;
+  CheckingAccount &operator=(const CheckingAccount &) = delete;
+  CheckingAccount &operator=(const CheckingAccount &&) = delete;
 
   double withdraw(double) override;
   void display() noexcept override;

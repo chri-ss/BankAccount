@@ -53,13 +53,13 @@ BankAccount *createAccount() {
     //  get info for checking account
     double overdraftLimit;
     double monthlyFee;
-    getCheckingAccountInfo(overdraftLimit, monthlyFee);
+    //    getCheckingAccountInfo(overdraftLimit, monthlyFee);
     break;
   case 3:
     // get info for business account
     int transactionLimit;
     double transactionFee;
-    getBusinessAccountInfo(transactionLimit, transactionFee);
+    //   getBusinessAccountInfo(transactionLimit, transactionFee);
     break;
   default:
     break;
@@ -95,12 +95,73 @@ void getBankAccountInfo(std::string &acctHldr, double &bal) {
     if (std::cin.fail()) {
       std::cin.clear();
       std::cin.ignore(1000, '\n');
+      bal = -1;
     }
     if (bal <= 0) {
       std::cout << "balance must be a positive value. Please try again."
                 << std::endl;
     }
   } while (bal <= 0);
+}
+
+void getSavingsAccountInfo(double &intRate, double &wdFee, int &freeWdLim,
+                           int &availFreeWd) {
+  do {
+    std::cout << "Enter the interest rate for the account" << std::endl;
+    std::cin >> intRate;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+      intRate = -1;
+    }
+    if (intRate < 0) {
+      std::cout << "interest rate must be a positive value. Please try again."
+                << std::endl;
+    }
+  } while (intRate < 0);
+  do {
+    std::cout << "Enter the withdrawal fee for the account" << std::endl;
+    std::cin >> wdFee;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+      wdFee = -1;
+    }
+    if (wdFee < 0) {
+      std::cout << "withdrawal fee must be a positive value. Please try again."
+                << std::endl;
+    }
+  } while (wdFee < 0);
+  do {
+    std::cout << "Enter the free withdrawal limit for the account" << std::endl;
+    std::cin >> freeWdLim;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+      freeWdLim = -1;
+    }
+    if (freeWdLim < 0) {
+      std::cout
+          << "free withdrawal limit must be a positive value. Please try again."
+          << std::endl;
+    }
+  } while (freeWdLim < 0);
+  do {
+    std::cout
+        << "Enter the available free withdrawals per month for the account"
+        << std::endl;
+    std::cin >> availFreeWd;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+      availFreeWd = -1;
+    }
+    if (availFreeWd < 0) {
+      std::cout << "available free withdrawals must be a positive value. "
+                   "Please try again."
+                << std::endl;
+    }
+  } while (availFreeWd < 0);
 }
 
 int main() {

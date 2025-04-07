@@ -41,11 +41,12 @@ protected:
 private:
   std::string accountHolder;
   int accountNumber;
+  //increment in subclass
   static int accountCounter;
 };
 
-BankAccount::BankAccount()
-    : accountHolder(""), accountNumber(0), balance(0.0) {}
+//BankAccount::BankAccount()
+ //   : accountHolder(""), accountNumber(0), balance(0.0) {}
 
 BankAccount::BankAccount(std::string acctHldr, double bal)
     : accountHolder(acctHldr), accountNumber(++accountCounter), balance(bal) {}
