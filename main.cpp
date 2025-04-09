@@ -15,6 +15,11 @@ void getSavingsAccountInfo(double &, double &, int &, int &);
 void getCheckingAccountInfo(double &, double &);
 void getBusinessAccountInfo(int &, double &);
 
+template <typename T>
+void validateNumericInput(T &val, const std::string &displayStr);
+
+// To validate numeric input gathered when creating an account
+// template <typename T> void validateNumericInput(T &, std::string);
 int main() {
   SavingsAccount savings1("chris", 100, 0.05, 0.50, 10, 10);
   CheckingAccount checking1("Chris", 200, 1000.0, 15.00);
@@ -96,6 +101,25 @@ bool validateName(const std::string &str) {
   return true;
 }
 
+template <typename T>
+void validateNumericInput(T &val, const std::string &displayStr) {
+  do {
+    std::cout << "Enter the " << displayStr << " for the account" << std::endl;
+    std::cin >> val;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+      val = -1;
+    }
+    if (val < 0) {
+      std::cout << displayStr
+                << " must be a positive value. "
+                   "Please try again."
+                << std::endl;
+    }
+  } while (val < 0);
+}
+
 void getBankAccountInfo(std::string &acctHldr, double &bal) {
   do {
     std::cout << "Enter a name for the account" << std::endl;
@@ -106,142 +130,25 @@ void getBankAccountInfo(std::string &acctHldr, double &bal) {
                 << std::endl;
     }
   } while (!validateName(acctHldr));
-  // account numbers handled by BankAccount base class
+  //  account numbers handled by BankAccount base class
 
-  do {
-    std::cout << "Enter the starting balance for the account" << std::endl;
-    std::cin >> bal;
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(1000, '\n');
-      bal = -1;
-    }
-    if (bal <= 0) {
-      std::cout << "balance must be a positive value. Please try again."
-                << std::endl;
-    }
-  } while (bal <= 0);
+  validateNumericInput(bal, "the starting balance");
 }
 
 void getSavingsAccountInfo(double &intRate, double &wdFee, int &freeWdLim,
                            int &availFreeWd) {
-  do {
-    std::cout << "Enter the interest rate for the account" << std::endl;
-    std::cin >> intRate;
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(1000, '\n');
-      intRate = -1;
-    }
-    if (intRate < 0) {
-      std::cout << "interest rate must be a positive value. Please try again."
-                << std::endl;
-    }
-  } while (intRate < 0);
-  do {
-    std::cout << "Enter the withdrawal fee for the account" << std::endl;
-    std::cin >> wdFee;
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(1000, '\n');
-      wdFee = -1;
-    }
-    if (wdFee < 0) {
-      std::cout << "withdrawal fee must be a positive value. Please try again."
-                << std::endl;
-    }
-  } while (wdFee < 0);
-  do {
-    std::cout << "Enter the free withdrawal limit for the account" << std::endl;
-    std::cin >> freeWdLim;
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(1000, '\n');
-      freeWdLim = -1;
-    }
-    if (freeWdLim < 0) {
-      std::cout
-          << "free withdrawal limit must be a positive value. Please try again."
-          << std::endl;
-    }
-  } while (freeWdLim < 0);
-  do {
-    std::cout
-        << "Enter the available free withdrawals per month for the account"
-        << std::endl;
-    std::cin >> availFreeWd;
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(1000, '\n');
-      availFreeWd = -1;
-    }
-    if (availFreeWd < 0) {
-      std::cout << "available free withdrawals must be a positive value. "
-                   "Please try again."
-                << std::endl;
-    }
-  } while (availFreeWd < 0);
+  validateNumericInput(intRate, "interest rate");
+  validateNumericInput(wdFee, "withdrawal fee");
+  validateNumericInput(freeWdLim, "free withdrawal limit");
+  validateNumericInput(availFreeWd, "available free withdrawals per month");
 }
 
 void getCheckingAccountInfo(double &odLim, double &mFee) {
-  do {
-    std::cout << "Enter the available overdraft limit for the account"
-              << std::endl;
-    std::cin >> odLim;
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(1000, '\n');
-      odLim = -1;
-    }
-    if (odLim < 0) {
-      std::cout << "overdraft limit must be a positive value. "
-                   "Please try again."
-                << std::endl;
-    }
-  } while (odLim < 0);
-  do {
-    std::cout << "monthly fee for the account" << std::endl;
-    std::cin >> mFee;
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(1000, '\n');
-      mFee = -1;
-    }
-    if (mFee < 0) {
-      std::cout << "monthly fee must be a positive value. "
-                   "Please try again."
-                << std::endl;
-    }
-  } while (mFee < 0);
+  validateNumericInput(odLim, "available overdraft limit");
+  validateNumericInput(mFee, "monthly fee");
 }
 
 void getBusinessAccountInfo(int &transLim, double &transFee) {
-  do {
-    std::cout << "transaction limit for the account" << std::endl;
-    std::cin >> transLim;
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(1000, '\n');
-      transLim = -1;
-    }
-    if (transLim < 0) {
-      std::cout << "transaction limit must be a positive value. "
-                   "Please try again."
-                << std::endl;
-    }
-  } while (transLim < 0);
-  do {
-    std::cout << "transaction limit for the account" << std::endl;
-    std::cin >> transFee;
-    if (std::cin.fail()) {
-      std::cin.clear();
-      std::cin.ignore(1000, '\n');
-      transFee = -1;
-    }
-    if (transFee < 0) {
-      std::cout << "transaction limit must be a positive value. "
-                   "Please try again."
-                << std::endl;
-    }
-  } while (transFee < 0);
+  validateNumericInput(transLim, "transaction limit");
+  validateNumericInput(transFee, "transaction fee");
 }
