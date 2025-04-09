@@ -15,24 +15,15 @@ void getSavingsAccountInfo(double &, double &, int &, int &);
 void getCheckingAccountInfo(double &, double &);
 void getBusinessAccountInfo(int &, double &);
 
+// To validate numeric input gathered when creating an account
 template <typename T>
 void validateNumericInput(T &val, const std::string &displayStr);
 
-// To validate numeric input gathered when creating an account
-// template <typename T> void validateNumericInput(T &, std::string);
 int main() {
-  SavingsAccount savings1("chris", 100, 0.05, 0.50, 10, 10);
-  CheckingAccount checking1("Chris", 200, 1000.0, 15.00);
-  BusinessAccount business1("Chris", 300, 6, 20.0);
+  BankAccount *account1 = createAccount();
 
-  BankAccount *bPtr = &savings1;
-  BankAccount *bPtr2 = &checking1;
-  BankAccount *bPtr3 = &business1;
+  account1->display();
 
-  bPtr->display();
-  bPtr2->display();
-  bPtr3->display();
-  createAccount();
   return 0;
 }
 
@@ -72,18 +63,23 @@ BankAccount *createAccount() {
     int availablefreeWithdraw;
     getSavingsAccountInfo(interestRate, withdrawFee, freeWithdrawlimit,
                           availablefreeWithdraw);
+    account = new SavingsAccount(accountHldr, bal, interestRate, withdrawFee,
+                                 freeWithdrawlimit, availablefreeWithdraw);
     break;
   case 2:
     //  get info for checking account
     double overdraftLimit;
     double monthlyFee;
     getCheckingAccountInfo(overdraftLimit, monthlyFee);
+    account = new CheckingAccount(accountHldr, bal, overdraftLimit, monthlyFee);
     break;
   case 3:
     // get info for business account
     int transactionLimit;
     double transactionFee;
     getBusinessAccountInfo(transactionLimit, transactionFee);
+    account =
+        new BusinessAccount(accountHldr, bal, transactionLimit, transactionFee);
     break;
   default:
     break;
@@ -130,6 +126,7 @@ void getBankAccountInfo(std::string &acctHldr, double &bal) {
                 << std::endl;
     }
   } while (!validateName(acctHldr));
+
   //  account numbers handled by BankAccount base class
 
   validateNumericInput(bal, "the starting balance");
