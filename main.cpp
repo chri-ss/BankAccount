@@ -78,7 +78,7 @@ BankAccount *createAccount() {
     // get info for business account
     int transactionLimit;
     double transactionFee;
-    //   getBusinessAccountInfo(transactionLimit, transactionFee);
+    getBusinessAccountInfo(transactionLimit, transactionFee);
     break;
   default:
     break;
@@ -213,4 +213,35 @@ void getCheckingAccountInfo(double &odLim, double &mFee) {
                 << std::endl;
     }
   } while (mFee < 0);
+}
+
+void getBusinessAccountInfo(int &transLim, double &transFee) {
+  do {
+    std::cout << "transaction limit for the account" << std::endl;
+    std::cin >> transLim;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+      transLim = -1;
+    }
+    if (transLim < 0) {
+      std::cout << "transaction limit must be a positive value. "
+                   "Please try again."
+                << std::endl;
+    }
+  } while (transLim < 0);
+  do {
+    std::cout << "transaction limit for the account" << std::endl;
+    std::cin >> transFee;
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(1000, '\n');
+      transFee = -1;
+    }
+    if (transFee < 0) {
+      std::cout << "transaction limit must be a positive value. "
+                   "Please try again."
+                << std::endl;
+    }
+  } while (transFee < 0);
 }
