@@ -6,8 +6,14 @@
 #include <string>
 
 // To create specific kinds of bank account objects
-BankAccount *createAccount();
+BankAccount *createAccount() noexcept;
 
+// transfer funds between two bank accounts
+void transfer(const BankAccount *, const BankAccount *, double);
+
+void transfer(BankAccount *account1, BankAccount *account2, double amount) {
+  account1->deposit(account2->withdraw(amount));
+}
 // utilities for validating input
 bool validateName(const std::string &);
 void getBankAccountInfo(std::string &, double &);
@@ -16,18 +22,27 @@ void getCheckingAccountInfo(double &, double &);
 void getBusinessAccountInfo(int &, double &);
 
 // To validate numeric input gathered when creating an account
-template <typename T>
-void validateNumericInput(T &val, const std::string &displayStr);
+template <typename T> void validateNumericInput(T &, const std::string &);
 
 int main() {
-  BankAccount *account1 = createAccount();
+  const int NUM_ACCOUNTS = 5;
+  BankAccount **accounts = new BankAccount *[NUM_ACCOUNTS];
 
-  account1->display();
+  for (int i = 0; i < NUM_ACCOUNTS; ++i) {
+    accounts[i] = createAccount();
+  }
 
+  accounts[0]->display();
+  accounts[NUM_ACCOUNTS - 1]->display();
+
+  transfer(accounts[0], accounts[NUM_ACCOUNTS - 1], 50.0);
+
+  accounts[0]->display();
+  accounts[NUM_ACCOUNTS - 1]->display();
   return 0;
 }
 
-BankAccount *createAccount() {
+BankAccount *createAccount() noexcept {
   // ask what type of account to make
   int accountChoice = 0;
   do {
